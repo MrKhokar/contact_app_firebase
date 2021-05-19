@@ -33,6 +33,7 @@ const ContactForm = (props) => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log(values)
     props.addOrEdit(values);
   };
   const [values, setValues] = useState(initValues);

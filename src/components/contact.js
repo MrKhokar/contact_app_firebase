@@ -8,7 +8,7 @@ const Contact = () => {
     if (currentId === "") {
       firebaseDb.child("contact").push(obj, (err) => {
         if (err) console.log(err);
-        else setCurrentId("")
+        else setCurrentId("");
       });
     } else {
       firebaseDb
@@ -31,12 +31,24 @@ const Contact = () => {
   };
   const [contactobj, setContactobj] = useState({});
   const [currentId, setCurrentId] = useState("");
-  useEffect(() => {
-    firebaseDb.child("contact").on("value", (snapshot) => {
-      console.log(snapshot.val())
-      setContactobj({...snapshot.val()})
-    })
-  });
+  const fix2 = () => {
+    firebaseDb.child("contact").on(
+      "value",
+      (snapshot) => {
+          if (snapshot.val() != null)
+           setContactobj({ ...snapshot.val() })
+           
+        else { setContactobj({}); }
+      }
+        
+    )
+}
+  useEffect(
+    () => {
+      fix2()
+     },[]
+    
+  );
 
   return (
     <>
@@ -51,6 +63,9 @@ const Contact = () => {
         <div className="row">
           <div className="col-md-4">
             <ContactForm
+              currentId={currentId}
+              addOrEdit={addOrEdit}
+              contactobj={contactobj}
               {...{ currentId, addOrEdit, contactobj }}
             />
           </div>
