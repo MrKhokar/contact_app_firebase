@@ -8,7 +8,7 @@ const Contact = () => {
     if (currentId === "") {
       firebaseDb.child("contact").push(obj, (err) => {
         if (err) console.log(err);
-        else setCurrentId("");
+        else setCurrentId("")
       });
     } else {
       firebaseDb
