@@ -31,89 +31,81 @@ const Contact = () => {
   };
   const [contactobj, setContactobj] = useState({});
   const [currentId, setCurrentId] = useState("");
-  const fix2 = () => {
-    firebaseDb.child("contact").on(
-      "value",
-      (snapshot) => {
-          if (snapshot.val() != null)
-           setContactobj({ ...snapshot.val() })
-           
-        else { setContactobj({}); }
+  const data = () => {
+    firebaseDb.child("contact").on("value", (snapshot) => {
+      if (snapshot.val() != null)
+        setContactobj({ ...snapshot.val() });
+      else {
+        setContactobj({});
       }
-        
-    )
-}
-  useEffect(
-    () => {
-      fix2()
-     },[]
-    
-  );
+    });
+  };
+  useEffect(() => {
+    data();
+  }, []);
 
   return (
     <>
       <div className="container">
-        <div className="jumbotron align-left">
-          <div className="container">
-            <h1 className="display-5">
-              Contact Registration
-            </h1>
+        <div className="row">
+          <div className="col ">
+            <div className="jumbotron align-left">
+              <h1 className="display-5">
+                Contact Registration
+              </h1>
+            </div>
           </div>
         </div>
         <div className="row">
-          <div className="col-md-4">
+          <div className="col">
             <ContactForm
-              currentId={currentId}
-              addOrEdit={addOrEdit}
-              contactobj={contactobj}
               {...{ currentId, addOrEdit, contactobj }}
             />
           </div>
-          <div className="col-md-8">
-            <table className="table table-borderless table-stripped">
-              <thead className="theade-light">
-                <tr>
-                  <th>Fullname</th>
-                  <th>Email</th>
-                  <th>Number</th>
-                  <th>Address</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {Object.keys(contactobj).map((id) => (
-                  <tr key={id}>
-                    <td>{contactobj[id].fullname}</td>
-                    <td>{contactobj[id].email}</td>
-                    <td>{contactobj[id].number}</td>
-                    <td>{contactobj[id].add}</td>
-                    <td>
-                      <div className="row">
-                        <button className="btn text-primary">
-                          <i
-                            className="fas fa-pencil-alt"
-                            onClick={() => {
-                              setCurrentId(id);
-                            }}
-                          />
-                        </button>
-                        <button className="btn text-danger">
-                          <i
-                            className="fas fa-trash-alt"
-                            onClick={() => {
-                              onDelete(id);
-                            }}
-                          />
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                  // Here by means of Object.keys we take the keys that means id inside of the object that contain data then by that id we ittrate to the object
-                ))}
-              </tbody>
-            </table>
-          </div>
         </div>
+
+        <table className="table table-borderless table-stripped">
+          <thead className="theade-light">
+            <tr>
+              <th>Fullname</th>
+              <th>Email</th>
+              <th>Number</th>
+              <th>Address</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {Object.keys(contactobj).map((id) => (
+              <tr key={id}>
+                <td>{contactobj[id].fullname}</td>
+                <td>{contactobj[id].email}</td>
+                <td>{contactobj[id].number}</td>
+                <td>{contactobj[id].add}</td>
+                <td>
+                  <div className="">
+                    <button className="btn text-primary">
+                      <i
+                        className="fas fa-pencil-alt"
+                        onClick={() => {
+                          setCurrentId(id);
+                        }}
+                      />
+                    </button>
+                    <button className="btn text-danger">
+                      <i
+                        className="fas fa-trash-alt"
+                        onClick={() => {
+                          onDelete(id);
+                        }}
+                      />
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              // Here by means of Object.keys we take the keys that means id inside of the object that contain data then by that id we ittrate to the object
+            ))}
+          </tbody>
+        </table>
       </div>
     </>
   );

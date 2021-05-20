@@ -5,17 +5,17 @@ const ContactForm = (props) => {
     fullname: "",
     email: "",
     number: "",
-    add: ""
+    add: "",
   };
   useEffect(
     () => {
       if (props.currentId === "")
-        setValues(()=>({
-          ...initValues
+        setValues(() => ({
+          ...initValues,
         }));
       else {
-        setValues(()=>({
-          ...props.contactobj[props.currentId]
+        setValues(() => ({
+          ...props.contactobj[props.currentId],
         }));
       }
     },
@@ -24,7 +24,7 @@ const ContactForm = (props) => {
   );
 
   const handleInput = (e) => {
-    console.log(e)
+    console.log(e);
     const { name, value } = e.target;
     setValues({
       ...values,
@@ -33,7 +33,7 @@ const ContactForm = (props) => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(values)
+    console.log(values);
     props.addOrEdit(values);
   };
   const [values, setValues] = useState(initValues);
@@ -44,7 +44,7 @@ const ContactForm = (props) => {
         onSubmit={handleSubmit}
         className="container">
         <div className="row">
-          <div className="form-group input-group">
+          <div className="form-group input-group col">
             <div className="input-group-prepend">
               <div className="input-group-text">
                 <i className="fas fa-user "></i>
@@ -61,7 +61,7 @@ const ContactForm = (props) => {
           </div>
         </div>
         <div className="row">
-          <div className="col-xs form-group input-group ">
+          <div className="col form-group input-group ">
             <div className="input-group-prepend">
               <div className="input-group-text">
                 <i className="fas fa-mobile-alt "></i>
@@ -75,7 +75,9 @@ const ContactForm = (props) => {
               onChange={handleInput}
             />
           </div>
-          <div className="form-group input-group col-xs">
+        </div>
+        <div className="row">
+          <div className="form-group input-group col">
             <div className="input-group-prepend">
               <div className="input-group-text">
                 <i className="fas fa-envelope "></i>
@@ -89,27 +91,27 @@ const ContactForm = (props) => {
               onChange={handleInput}
             />
           </div>
-          <div className="row">
-            <div className="form-group col">
-              <textarea
-                className="form-control"
-                placeholder="Address"
-                name="add"
-                value={values.add}
-                onChange={handleInput}
-              />
-            </div>
+        </div>
+        <div className="row">
+          <div className="form-group col">
+            <textarea
+              className="form-control"
+              placeholder="Address"
+              name="add"
+              value={values.add}
+              onChange={handleInput}
+            />
           </div>
-          <div className="row">
-            <div className="form-group col">
-              <input
-                type="submit"
-                value={
-                  props.currentId === "" ? "Save" : "Update"
-                }
-                className="btn btn-primary btn-block"
-              />
-            </div>
+        </div>
+        <div className="row">
+          <div className="form-group col">
+            <input
+              type="submit"
+              value={
+                props.currentId === "" ? "Save" : "Update"
+              }
+              className="btn btn-primary btn-block"
+            />
           </div>
         </div>
       </form>
